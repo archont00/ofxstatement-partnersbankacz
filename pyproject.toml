@@ -3,12 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ofxstatement-sample"
+name = "ofxstatement-partnersbankacz"
 version = "0.0.1"
 authors = [
-  { name="Andrey Lebedev", email="andrey@lebedev.lt" },
+  { name="Arch Ont", email="archont@nowhere.com" },
 ]
-description = "Sample plugin for ofxstatement"
+description = "Ofxstatement plugin for Partners Banka, a.s. (Czech Republic)"
 readme = "README.rst"
 requires-python = ">=3.9"
 classifiers = [
@@ -27,7 +27,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/kedder/ofxstatement-sample/"
+Homepage = "https://github.com/archont00/ofxstatement-partnersbankacz/"
 
 [project.entry-points."ofxstatement"]
-sample = "ofxstatement_sample.plugin:SamplePlugin"
+partnersbankacz = "ofxstatement_sample.plugin:PartnersbankaczPlugin"
