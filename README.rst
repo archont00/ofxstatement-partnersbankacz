@@ -11,7 +11,7 @@ Usage
 =====
 ::
 
-  $ ofxstatement convert -t partnersbankacz:CZK vypis_3408294210_20240505_20240531.csv vypis_3408294210_20240505_20240531.ofx
+  $ ofxstatement convert -t partnersbankacz:SA vypis_3408294210_20240505_20240531.csv vypis_3408294210_20240505_20240531.ofx
 
 Configuration
 =============
