@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ofxstatement-partnersbankacz"
 version = "0.0.1"
 authors = [
-  { name="Arch Ont", email="archont@nowhere.com" },
+  { name="Milan Knížek", email="milankni@gmail.com" },
 ]
 description = "Ofxstatement plugin for Partners Banka, a.s. (Czech Republic) (CSV, UTF-8)"
 readme = "README.rst"
