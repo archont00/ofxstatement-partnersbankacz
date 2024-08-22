@@ -1,89 +1,42 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Sample plugin for ofxstatement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is a parser for CSV transaction history exported from Partners Banka, a.s. (Czech Republic)
+from within the mobile app (Account // ... (more) // Documents // Generate statement)
 
-This project provides a boilerplate for custom plugins for ofxstatement.
+The expected field separator is semicolumn (";") and character encoding UTF-8
 
-`ofxstatement`_ is a tool to convert proprietary bank statement to OFX format,
-suitable for importing to GnuCash. Plugin for ofxstatement parses a
-particular proprietary bank statement format and produces common data
-structure, that is then formatted into an OFX file.
+It is a plugin for `ofxstatement`_.
 
 .. _ofxstatement: https://github.com/kedder/ofxstatement
 
+Usage
+=====
+::
 
-Users of ofxstatement have developed several plugins for their banks. They are
-listed on main `ofxstatement`_ site. If your bank is missing, you can develop
-your own plugin.
+  $ ofxstatement convert -t partnersbankacz:CZK vypis_3408294210_20240505_20240531.csv vypis_3408294210_20240505_20240531.ofx
 
-Setting up development environment
-==================================
+Configuration
+=============
+::
 
-It is recommended to use ``pipenv`` to make a clean development environment.
-Setting up dev environment for writing a plugin is easy::
+  $ ofxstatement edit-config
 
-  $ git clone https://github.com/kedder/ofxstatement-sample ofxstatement-yourbank
-  $ cd ofxstatement-yourbank
-  $ pipenv sync --dev
-  $ pipenv shell
+and set e.g. the following:
+::
 
-This will download all the dependencies and install them into your virtual
-environment. After this, you should be able to do::
+  [partnersbankacz:SA]
+  plugin = partnersbankacz
+  currency = CZK
+  account = Partners Banka SA
+  account_type = SAVINGS
 
-  $ ofxstatement list-plugins
-  The following plugins are available:
+  [partnersbankacz:CA]
+  plugin = partnersbankacz
+  currency = CZK
+  account = Partners Banka CA
+  account_type = CHECKING
 
-    sample           Sample plugin (for developers only)
+Issues
+======
 
+Partners Banka is fresh newcomer to the market and things may change - especially the payment types list is not complete yet.
 
-
-Your own plugin
-===============
-
-To create your own plugin, follow these steps:
-
-* Edit ``pyproject.toml`` and provide relevant metadata for your plugin.  Pay close
-  attention to ``project.entry-points`` section: it lists plugins you are registering
-  within ofxstatement. Give meaningful name to the plugin and reference your plugin
-  class name.
-* Replace contents of ``README.rst`` with description of your plugin
-* Rename the project name (``ofxstatement_sample``) to match plugin package name you
-  have provided in ``entry_points`` parameter.
-* Open the ``plugin.py`` and rename ``SamplePlugin`` and ``SampleParser``
-  classes to match your plugin class name.
-* Now, draw the rest of the owl (c).
-
-.. _ofxstatement-sample: https://github.com/kedder/ofxstatement-sample
-
-Your ``StatementParser`` is the main object that does all the hard work. It
-has only one public method: ``parse()``, that should return
-``ofxstatement.statement.Statement`` object, filled with data from given input.
-The default implementation, however, splits this work into two parts:
-``split_records()`` to split the whole file into logical parts, e.g.
-transaction records, and ``parse_record()`` to extract information from
-individual record. See ``src/ofxstatement/parser.py`` for details. If your
-statement' format looks like CSV file, you might find ``CsvStatementParser``
-class useful: it simplifies mapping bettween CSV columns and ``StatementLine``
-attributes.
-
-``Plugin`` interface consists only of ``get_parser()`` method, that returns
-configured StatementParser object for given input filename. Docstrings on
-Plugin class is also useful for describing the purpose of your plugin. First
-line of it is visible in ``ofxstatement list-plugins`` output.
-
-Testing
-=======
-
-Test your code as you would do with any other project.  To make sure
-ofxstatement is still able to load your plugin, run::
-
-  (.venv)$ ofxstatement list-plugins
-
-You should be able to see your plugin listed.
-
-After you are done
-==================
-
-After your plugin is ready, feel free to open an issue on `ofxstatement`_
-project to include your plugin in "known plugin list". That would hopefully
-make life of other clients of your bank easier.
+Feel free to create GitHub pull request to accomodate for the changes.
