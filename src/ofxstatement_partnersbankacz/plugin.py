@@ -63,7 +63,7 @@ class PartnersbankaczParser(CsvStatementParser):
         # Convert numbers - thousands delimiter (special char: " " = "\xa") and decimal point
         if line[columns["Částka"]] != '':
             line[columns["Částka"]] = float(line[columns["Částka"]].replace(' ', '').replace(',', '.'))
-            if line[columns["Směr úhrady"]] = 'Odchozí':
+            if line[columns["Směr úhrady"]] == 'Odchozí':
                 line[columns["Částka"]] = -abs(line[columns["Částka"]])
 
         if line[columns["Původní částka úhrady"]] != '':
@@ -122,7 +122,8 @@ class PartnersbankaczParser(CsvStatementParser):
         if line[columns["IBAN protistrany"]] != "":
             StatementLine.payee += separator + "IBAN " + line[columns["IBAN protistrany"]]
 
-        # StatementLine.memo: include other useful info, if available
+        # StatementLine.memo: include other useful info, if available. Need to include also "Typ úhrady" as for saving account,
+        # the "memo" is empty
 
         if StatementLine.memo == "":
             separator = ""
@@ -155,5 +156,9 @@ class PartnersbankaczParser(CsvStatementParser):
 
         if line[columns["Původní měna úhrady"]] != line[columns["Měna"]] and line[columns["Původní měna úhrady"]] != "":
             StatementLine.memo += separator + "Původní měna: " + line[columns["Původní částka úhrady"]] + line[columns["Původní měna úhrady"]]
+            separator = "|"
+
+        if line[columns["Typ úhrady"]] != '':
+           StatementLine.memo += separator + line[columns["Typ úhrady"]]
 
         return StatementLine
