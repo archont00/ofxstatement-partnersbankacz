@@ -63,6 +63,8 @@ class PartnersbankaczParser(CsvStatementParser):
         # Convert numbers - thousands delimiter (special char: " " = "\xa") and decimal point
         if line[columns["Částka"]] != '':
             line[columns["Částka"]] = float(line[columns["Částka"]].replace(' ', '').replace(',', '.'))
+            if line[columns["Směr úhrady"]] = 'Odchozí':
+                line[columns["Částka"]] = -abs(line[columns["Částka"]])
 
         if line[columns["Původní částka úhrady"]] != '':
             line[columns["Původní částka úhrady"]] = float(line[columns["Původní částka úhrady"]].replace(' ', '').replace(',', '.'))
