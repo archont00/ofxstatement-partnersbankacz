@@ -1,7 +1,7 @@
 This is a parser for CSV transaction history exported from Partners Banka, a.s. (Czech Republic)
-from within the mobile app (Account // ... (more) // Documents // Generate statement)
+from within the mobile app (Account // ... (more) // Statements and Confirmations // Generate Transactional statement)
 
-The expected field separator is semicolumn (";") and character encoding UTF-8
+The expected field separator is semicolumn (";") and character encoding UTF-8 and Czech language of the headings.
 
 It is a plugin for `ofxstatement`_.
 
