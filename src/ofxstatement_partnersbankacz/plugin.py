@@ -10,7 +10,7 @@ class PartnersbankaczPlugin(Plugin):
     """
 
     def get_parser(self, filename):
-        PartnersbankaczPlugin.encoding = self.settings.get('charset', 'utf-8')
+        PartnersbankaczPlugin.encoding = self.settings.get('charset', 'utf-8-sig')
         f = open(filename, "r", encoding=PartnersbankaczPlugin.encoding)
         parser = PartnersbankaczParser(f)
         parser.statement.currency = self.settings.get('currency', 'CZK')
