@@ -63,11 +63,11 @@ class PartnersbankaczParser(CsvStatementParser):
         # Convert numbers - thousands delimiter (special char: " " = "\xa") and decimal point
         if line[columns["Částka"]] != '':
             line[columns["Částka"]] = float(line[columns["Částka"]].replace(' ', '').replace(',', '.'))
-            if line[columns["Směr úhrady"]] == 'Odchozí':
+            if line[columns["Směr"]] == 'Odchozí':
                 line[columns["Částka"]] = -abs(line[columns["Částka"]])
 
-        if line[columns["Původní částka úhrady"]] != '':
-            line[columns["Původní částka úhrady"]] = float(line[columns["Původní částka úhrady"]].replace(' ', '').replace(',', '.'))
+        if line[columns["Původní částka"]] != '':
+            line[columns["Původní částka"]] = float(line[columns["Původní částka"]].replace(' ', '').replace(',', '.'))
 
         StatementLine = super(PartnersbankaczParser, self).parse_record(line)
 
@@ -84,7 +84,7 @@ class PartnersbankaczParser(CsvStatementParser):
 
         # Manually set some of the typical transaction types.
         # EDIT: the bank is new, many types may be missing.
-        payment_type = line[columns["Typ úhrady"]]
+        payment_type = line[columns["Typ"]]
         if payment_type.startswith("Daň z úroku"):
             StatementLine.trntype = "DEBIT"
         elif payment_type.startswith("Úroky"):
@@ -154,11 +154,11 @@ class PartnersbankaczParser(CsvStatementParser):
             StatementLine.memo += separator + "Číslo karty: " + line[columns["Číslo karty"]]
             separator = "|"
 
-        if line[columns["Původní měna úhrady"]] != line[columns["Měna"]] and line[columns["Původní měna úhrady"]] != "":
-            StatementLine.memo += separator + "Původní měna: " + line[columns["Původní částka úhrady"]] + line[columns["Původní měna úhrady"]]
+        if line[columns["Původní měna"]] != line[columns["Měna"]] and line[columns["Původní měna"]] != "":
+            StatementLine.memo += separator + "Původní měna: " + line[columns["Původní částka"]] + line[columns["Původní měna"]]
             separator = "|"
 
-        if line[columns["Typ úhrady"]] != '':
-           StatementLine.memo += separator + line[columns["Typ úhrady"]]
+        if line[columns["Typ"]] != '':
+           StatementLine.memo += separator + line[columns["Typ"]]
 
         return StatementLine
